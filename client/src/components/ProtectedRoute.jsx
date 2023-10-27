@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../features/auth/authSlice";
+import { selectCurrentUserId } from "../features/auth/authSlice";
 
 const ProtectedRoute = ({ children }) => {
-  const user = useSelector(selectCurrentUser);
+  const userId = useSelector(selectCurrentUserId);
 
-  if (!user) {
+  if (!userId) {
     return <Navigate to="/" />;
   }
   return children;

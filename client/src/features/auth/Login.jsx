@@ -3,7 +3,7 @@ import { useLoginMutation } from "./authApiSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "./authSlice";
-import { selectCurrentUser } from "./authSlice";
+import { selectCurrentUserId } from "./authSlice";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -17,7 +17,7 @@ const Login = () => {
   const handleUsernameInput = (e) => setUsername(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
 
-  const name = useSelector(selectCurrentUser);
+  const name = useSelector(selectCurrentUserId);
   // console.log("name now is", name);
 
   const handleSubmit = async (e) => {
@@ -25,7 +25,7 @@ const Login = () => {
     try {
       const userData = await login({ username, password }).unwrap();
       console.log(userData);
-      dispatch(setCredentials({ ...userData, username }));
+      dispatch(setCredentials({ ...userData }));
       setUsername("");
       setPassword("");
       navigate("/dashboard");
