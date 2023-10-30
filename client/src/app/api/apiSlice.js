@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { setCredentials, logOut } from "../../features/auth/authSlice";
-import { setCredentials } from "../../features/auth/authSlice";
+import {
+  setCredentials,
+  clearCredentials,
+} from "../../features/auth/authSlice";
 import { getRefreshToken } from "../../utils";
 
 const baseQuery = fetchBaseQuery({
@@ -18,15 +20,10 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log("q1", result);
+  // console.log("q1", result);
 
   if (result?.error?.status === 401) {
-    console.log("8**************");
-    console.log("sending refresh token");
-
-    const st = getRefreshToken();
-    const obj = JSON.stringify({ refresh: st });
-    console.log("obj:", obj, st);
+    // console.log("sending refresh token");
 
     // send refresh token to get new access token
     const refreshResult = await baseQuery(
@@ -34,9 +31,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         url: "/token/refresh",
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Set the content type to JSON
+          "Content-Type": "application/json",
         },
-        body: obj, // Stringify the body as JSON
+        body: JSON.stringify({ refresh: getRefreshToken() }),
       },
       api,
       extraOptions
@@ -44,16 +41,12 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     if (refreshResult?.data) {
       // store the new token
-      await api.dispatch(setCredentials({ ...refreshResult.data.access }));
-      // api.getState().auth.accessToken = refreshResult.data.access;
-      console.log("g", api.getState().auth.accessToken);
+      await api.dispatch(setCredentials({ ...refreshResult.data }));
 
       // retry the original query with new access token
       result = await baseQuery(args, api, extraOptions);
-
-      await api.dispatch(setCredentials({ ...refreshResult.data }));
     } else {
-      // api.dispatch(logOut());
+      api.dispatch(clearCredentials());
     }
   }
 
