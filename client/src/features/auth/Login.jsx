@@ -6,7 +6,7 @@ import { setCredentials } from "./authSlice";
 import { selectCurrentUserId } from "./authSlice";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [login, { isLoading }] = useLoginMutation();
@@ -14,19 +14,19 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleUsernameInput = (e) => setUsername(e.target.value);
+  const handleEmailInput = (e) => setEmail(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
 
-  const name = useSelector(selectCurrentUserId);
-  // console.log("name now is", name);
+  const id = useSelector(selectCurrentUserId);
+  console.log("id now is", id);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userData = await login({ username, password }).unwrap();
-      console.log(userData);
-      dispatch(setCredentials({ ...userData }));
-      setUsername("");
+      const result = await login({ email, password }).unwrap();
+      const { tokens } = result;
+      dispatch(setCredentials({ ...tokens }));
+      setEmail("");
       setPassword("");
       navigate("/dashboard");
     } catch (err) {
@@ -37,12 +37,12 @@ const Login = () => {
   const loginForm = (
     <section className="login-form">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="email">email:</label>
         <input
           type="text"
-          id="username"
-          value={username}
-          onChange={handleUsernameInput}
+          id="email"
+          value={email}
+          onChange={handleEmailInput}
           autoComplete="off"
           required
         />
