@@ -47,12 +47,21 @@ export const Header = () => {
       {currUserId ? (
         <a onClick={onLogout}>Logout</a>
       ) : (
-        <NavLink
-          to="/login"
-          className={({ isActive }) => (isActive ? "link active" : "link")}
-        >
-          Login
-        </NavLink>
+        <>
+          <NavLink
+            to="/login"
+            className={({ isActive }) => (isActive ? "link active" : "link")}
+          >
+            Login
+          </NavLink>
+
+          <NavLink
+            to="/register"
+            className={({ isActive }) => (isActive ? "link active" : "link")}
+          >
+            Register
+          </NavLink>
+        </>
       )}
     </nav>
   );

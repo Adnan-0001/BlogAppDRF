@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 
 import { useCheckTokenValidityQuery } from "./features/auth/authApiSlice";
 import { setCredentials } from "./features/auth/authSlice";
+import Register from "./features/auth/Register";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
-          <Route path="Login" element={<Login />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
 
           <Route
             path="dashboard"
