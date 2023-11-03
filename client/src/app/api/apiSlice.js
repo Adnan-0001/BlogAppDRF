@@ -28,7 +28,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     // send refresh token to get new access token
     const refreshResult = await baseQuery(
       {
-        url: "/token/refresh",
+        url: "/token/refresh/",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,12 +38,19 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       api,
       extraOptions
     );
+    // console.log("ref res:", refreshResult);
 
     if (refreshResult?.data) {
       // store the new token
       await api.dispatch(setCredentials({ ...refreshResult.data }));
 
       // retry the original query with new access token
+      if (args?.url === "logout/") {
+        const { refresh } = refreshResult.data;
+        const newBody = { ...args.body, refresh };
+        args = { ...args, body: newBody };
+      }
+
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(clearCredentials());

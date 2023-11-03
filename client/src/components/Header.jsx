@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectCurrentUserId,
@@ -12,7 +12,7 @@ export const Header = () => {
   const curRefreshToken = useSelector(selectCurrentRefreshToken);
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [logout] = useLogoutMutation();
   const onLogout = async () => {
     try {
