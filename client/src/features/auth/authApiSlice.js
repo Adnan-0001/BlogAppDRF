@@ -16,6 +16,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { refresh },
       }),
     }),
+    checkTokenValidity: builder.query({
+      query: () => "check-token-validity/",
+    }),
     refreshToken: builder.mutation({
       // not used
       query: (refresh) => ({
@@ -27,5 +30,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRefreshTokenMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRefreshTokenMutation,
+  useCheckTokenValidityQuery,
+} = authApiSlice;

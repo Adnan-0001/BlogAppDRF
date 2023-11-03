@@ -1,7 +1,3 @@
-import { useState } from "react";
-// import reactLogo from "./assets/react.svg";
-// import viteLogo from "/vite.svg";
-// import './App.css'
 import Login from "./features/auth/Login";
 import Home from "./pages/Home";
 import Error404 from "./pages/Error404";
@@ -10,14 +6,13 @@ import { SharedLayout } from "./components/SharedLayout";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
+import { useCheckTokenValidityQuery } from "./features/auth/authApiSlice";
 import { setCredentials } from "./features/auth/authSlice";
-import { selectCurrentUserId } from "./features/auth/authSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const userId = useSelector(selectCurrentUserId);
 
   useEffect(() => {
     const tokens = localStorage.getItem("authTokens")
@@ -27,8 +22,11 @@ function App() {
     if (tokens) {
       dispatch(setCredentials({ ...tokens }));
     }
-  }, []);
-  console.log("fdsx", userId);
+  }, [dispatch]);
+
+  // After initial state is set, check for token validity
+  useCheckTokenValidityQuery();
+
   return (
     <BrowserRouter>
       <Routes>
