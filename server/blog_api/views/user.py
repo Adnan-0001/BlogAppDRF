@@ -21,7 +21,6 @@ class UserRegistrationAPIView(GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print("meme", serializer)
         user = serializer.save()
         token = RefreshToken.for_user(user)
         data = serializer.data
