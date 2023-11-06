@@ -4,8 +4,8 @@ from blog_api.serializers import (
     UserSerializer,
 )
 from django.contrib.auth import get_user_model
-from rest_framework import status
-from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
+from rest_framework import status, viewsets
+from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.exceptions import TokenError
@@ -74,9 +74,6 @@ class UserLogoutAPIView(GenericAPIView):
                 )
 
 
-class UserAPIView(RetrieveUpdateAPIView):
-    permission_classes = (IsAuthenticated,)
+class UserAPIView(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
-
-    # def get_object(self):
-    #     return self.request.user
+    queryset = User.objects.all()

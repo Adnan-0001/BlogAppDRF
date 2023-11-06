@@ -1,7 +1,12 @@
 from django.urls import include, path
+from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from . import views
+
+router = DefaultRouter()
+router.register("users", views.UserAPIView, basename="user")
+
 
 urlpatterns = [
     path(
@@ -18,4 +23,5 @@ urlpatterns = [
         name="check_token_validity",
     ),
     path("api-auth/", include("rest_framework.urls")),
+    path("", include(router.urls)),
 ]

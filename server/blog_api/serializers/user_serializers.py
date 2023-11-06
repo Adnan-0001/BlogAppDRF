@@ -1,21 +1,16 @@
-from django.contrib.auth import authenticate
 from blog_api.models import Post, User
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # posts = serializers.PrimaryKeyRelatedField(
-    #     many=True, queryset=Post.objects.all()
-    # )
+    posts = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Post.objects.all()
+    )
 
     class Meta:
         model = User
-        fields = [
-            "id",
-            "email",
-            "first_name",
-            "last_name",
-        ]
+        fields = ["id", "email", "first_name", "last_name", "posts"]
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
