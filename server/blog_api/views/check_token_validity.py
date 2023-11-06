@@ -7,7 +7,7 @@ from rest_framework.generics import GenericAPIView
 class CheckTokenValidityView(GenericAPIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         return Response(
             {
                 "valid": True,

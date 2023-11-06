@@ -8,25 +8,31 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { useCheckTokenValidityQuery } from "./features/auth/authApiSlice";
+import { useCheckTokenValidityMutation } from "./features/auth/authApiSlice";
 import { setCredentials } from "./features/auth/authSlice";
 import Register from "./features/auth/Register";
 
 function App() {
   const dispatch = useDispatch();
 
+  const [checkTokenValidity] = useCheckTokenValidityMutation();
+
   useEffect(() => {
-    const tokens = localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
-      : null;
-    console.log("eff", tokens);
-    if (tokens) {
-      dispatch(setCredentials({ ...tokens }));
-    }
+    const updateTokensState = async () => {
+      const tokens = localStorage.getItem("authTokens")
+        ? JSON.parse(localStorage.getItem("authTokens"))
+        : null;
+
+      if (tokens) {
+        dispatch(setCredentials({ ...tokens }));
+        await checkTokenValidity();
+      }
+    };
+    updateTokensState();
   }, [dispatch]);
 
   // After initial state is set, check for token validity
-  useCheckTokenValidityQuery();
+  // useCheckTokenValidityQuery();
 
   return (
     <BrowserRouter>

@@ -16,8 +16,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { refresh },
       }),
     }),
-    checkTokenValidity: builder.query({
-      query: () => "check-token-validity/",
+    checkTokenValidity: builder.mutation({
+      query: () => ({
+        url: "check-token-validity/",
+        method: "POST",
+      }),
     }),
     register: builder.mutation({
       query: (formData) => ({
@@ -30,7 +33,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       // not used
       query: (refresh) => ({
         url: "token/refresh/",
-        method: "POST",
+        method: "GET",
         body: { refresh },
       }),
     }),
@@ -41,6 +44,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRefreshTokenMutation,
-  useCheckTokenValidityQuery,
+  // useCheckTokenValidityQuery,
+  useCheckTokenValidityMutation,
   useRegisterMutation,
 } = authApiSlice;
