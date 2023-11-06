@@ -17,9 +17,6 @@ const Login = () => {
   const handleEmailInput = (e) => setEmail(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
 
-  const id = useSelector(selectCurrentUserId);
-  console.log("id now is", id);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -43,7 +40,6 @@ const Login = () => {
           id="email"
           value={email}
           onChange={handleEmailInput}
-          autoComplete="off"
           required
         />
 

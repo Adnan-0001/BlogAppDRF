@@ -16,10 +16,6 @@ export const Header = () => {
   const [logout] = useLogoutMutation();
   const onLogout = async () => {
     try {
-      // const tokens = localStorage.getItem("authTokens")
-      //   ? JSON.parse(localStorage.getItem("authTokens"))
-      //   : null;
-      // const refreshToken = tokens?.refresh;
       const result = await logout(curRefreshToken).unwrap();
       dispatch(clearCredentials());
 

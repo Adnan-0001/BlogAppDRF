@@ -14,7 +14,6 @@ export const authSlice = createSlice({
       state.accessToken = access;
       state.refreshToken = refresh;
       localStorage.setItem("authTokens", JSON.stringify(action.payload));
-      console.log("done...");
     },
     clearCredentials: (state, action) => {
       state.userId = null;
