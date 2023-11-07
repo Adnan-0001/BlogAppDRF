@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { useCheckTokenValidityMutation } from "./features/auth/authApiSlice";
 import { setCredentials } from "./features/auth/authSlice";
 import Register from "./features/auth/Register";
+import PostList from "./features/posts/PostList";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="posts" element={<PostList />} />
+          {/* <Route path="posts/:id" element={<PostDetails />} /> */}
 
           {/* <Route element={<ProtectedRoute />}>
             <Route path="dashboard" element={<Dashboard />} />
