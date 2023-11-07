@@ -37,7 +37,7 @@ export const Header = () => {
           DRF Blogs
         </NavLink>
 
-        {currUserId ? (
+        {currUserId && (
           <>
             <span className="navbar-text">Welcome, {currUserId}</span>
 
@@ -52,18 +52,17 @@ export const Header = () => {
               Home
             </NavLink>
           </>
-        ) : (
-          <NavLink
-            to="/posts"
-            className={({ isActive }) =>
-              isActive
-                ? "link active navbar-text mr-auto"
-                : "link navbar-text mr-auto"
-            }
-          >
-            All Posts
-          </NavLink>
         )}
+        <NavLink
+          to="/posts"
+          className={({ isActive }) =>
+            isActive
+              ? "link active navbar-text mr-auto ml-2"
+              : "link navbar-text mr-auto ml-2"
+          }
+        >
+          All Posts
+        </NavLink>
 
         <button
           className="navbar-toggler"

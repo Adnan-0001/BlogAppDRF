@@ -24,24 +24,24 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password != password2) {
-      throw new Error("Password fields do not match");
-    }
 
-    const result = await register({
-      email,
-      password,
-      first_name: firstName,
-      last_name: lastName,
-    }).unwrap();
-    const { tokens } = result;
-    dispatch(setCredentials({ ...tokens }));
-    setEmail("");
-    setPassword("");
-    setFirstName("");
-    setLastName("");
-    navigate("/dashboard");
     try {
+      if (password != password2) {
+        throw new Error("Password fields do not match");
+      }
+      const result = await register({
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+      }).unwrap();
+      const { tokens } = result;
+      dispatch(setCredentials({ ...tokens }));
+      setEmail("");
+      setPassword("");
+      setFirstName("");
+      setLastName("");
+      navigate("/dashboard");
     } catch (error) {
       console.log("Registration error: ", error);
     }
