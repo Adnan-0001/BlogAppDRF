@@ -45,8 +45,8 @@ export const Header = () => {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "link active navbar-text mr-auto ml-3"
-                  : "link navbar-text mr-auto ml-3"
+                  ? "link active navbar-text ml-3"
+                  : "link navbar-text ml-3"
               }
             >
               Home
@@ -56,16 +56,29 @@ export const Header = () => {
         <NavLink
           to="/posts"
           className={({ isActive }) =>
-            isActive
-              ? "link active navbar-text mr-auto ml-2"
-              : "link navbar-text mr-auto ml-2"
+            isActive ? "link active navbar-text  ml-3" : "link navbar-text ml-3"
           }
         >
           All Posts
         </NavLink>
 
+        {currUserId && (
+          <>
+            <NavLink
+              to="/posts/add"
+              className={({ isActive }) =>
+                isActive
+                  ? "link active navbar-text ml-2"
+                  : "link navbar-text ml-2"
+              }
+            >
+              Add Post
+            </NavLink>
+          </>
+        )}
+
         <button
-          className="navbar-toggler"
+          className="navbar-toggler ml-auto"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNav"

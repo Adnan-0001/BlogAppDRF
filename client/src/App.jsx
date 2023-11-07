@@ -12,6 +12,7 @@ import { useCheckTokenValidityMutation } from "./features/auth/authApiSlice";
 import { setCredentials } from "./features/auth/authSlice";
 import Register from "./features/auth/Register";
 import PostList from "./features/posts/PostList";
+import { PostCreateForm } from "./features/posts/PostCreateForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="posts/add"
+            element={
+              <ProtectedRoute>
+                <PostCreateForm />
               </ProtectedRoute>
             }
           />
