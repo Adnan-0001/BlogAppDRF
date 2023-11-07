@@ -16,10 +16,6 @@ export const Header = () => {
   const [logout] = useLogoutMutation();
   const onLogout = async () => {
     try {
-      // const tokens = localStorage.getItem("authTokens")
-      //   ? JSON.parse(localStorage.getItem("authTokens"))
-      //   : null;
-      // const refreshToken = tokens?.refresh;
       const result = await logout(curRefreshToken).unwrap();
       dispatch(clearCredentials());
 
@@ -29,40 +25,104 @@ export const Header = () => {
     }
   };
 
-  return (
-    <nav className="navbar">
-      <NavLink
-        to="/"
-        className={({ isActive }) => (isActive ? "link active" : "link")}
-      >
-        Home
-      </NavLink>
+  const content = (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "link active navbar-brand" : "link navbar-brand"
+          }
+        >
+          DRF Blogs
+        </NavLink>
 
-      <NavLink
-        to="/dashboard"
-        className={({ isActive }) => (isActive ? "link active" : "link")}
-      >
-        Dashboard
-      </NavLink>
-      {currUserId ? (
-        <a onClick={onLogout}>Logout</a>
-      ) : (
-        <>
-          <NavLink
-            to="/login"
-            className={({ isActive }) => (isActive ? "link active" : "link")}
-          >
-            Login
-          </NavLink>
+        {currUserId ? (
+          <>
+            <span className="navbar-text">Welcome, {currUserId}</span>
 
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "link active navbar-text mr-auto ml-3"
+                  : "link navbar-text mr-auto ml-3"
+              }
+            >
+              Home
+            </NavLink>
+          </>
+        ) : (
           <NavLink
-            to="/register"
-            className={({ isActive }) => (isActive ? "link active" : "link")}
+            to="/posts"
+            className={({ isActive }) =>
+              isActive
+                ? "link active navbar-text mr-auto"
+                : "link navbar-text mr-auto"
+            }
           >
-            Register
+            All Posts
           </NavLink>
-        </>
-      )}
+        )}
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ml-auto">
+            {currUserId && (
+              <li className="nav-item">
+                <button
+                  className="btn btn-outline-primary my-2 my-lg-0 ml-2"
+                  onClick={onLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            )}
+
+            {!currUserId && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "link active btn btn-outline-primary my-2 my-lg-0"
+                        : "link btn btn-outline-primary my-2 my-lg-0"
+                    }
+                  >
+                    Login
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "link active btn btn-outline-primary my-2 my-lg-0 ml-2"
+                        : "link btn btn-outline-primary my-2 my-lg-0 ml-2"
+                    }
+                  >
+                    Register
+                  </NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
     </nav>
   );
+
+  return content;
 };
