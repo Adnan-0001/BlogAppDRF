@@ -33,25 +33,39 @@ const Login = () => {
 
   const loginForm = (
     <section className="login-form">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">email:</label>
-        <input
-          type="text"
-          id="email"
-          value={email}
-          onChange={handleEmailInput}
-          required
-        />
+      <form className="form" onSubmit={handleSubmit}>
+        <h4>Login</h4>
+        <div className="form-row">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            className="form-input"
+            id="email"
+            value={email}
+            onChange={handleEmailInput}
+            required
+          />
+        </div>
 
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          onChange={handlePwdInput}
-          value={password}
-          required
-        />
-        <button>Sign In</button>
+        <div className="form-row">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="form-input"
+            onChange={handlePwdInput}
+            value={password}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-block">
+          submit
+        </button>
       </form>
     </section>
   );

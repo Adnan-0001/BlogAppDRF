@@ -48,53 +48,85 @@ const Register = () => {
   };
 
   const registrationForm = (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="firstName">First Name:</label>
-      <input
-        type="text"
-        id="firstName"
-        value={firstName}
-        onChange={handleFirstNameInput}
-        required
-      />
+    <section className="register-form">
+      <form className="form" onSubmit={handleSubmit}>
+        <h4>Register</h4>
 
-      <label htmlFor="lastName">Last Name:</label>
-      <input
-        type="text"
-        id="lastName"
-        value={lastName}
-        onChange={handleLastNameInput}
-        required
-      />
+        <div className="form-row">
+          <label htmlFor="firstName" className="form-label">
+            First Name:
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            className="form-input"
+            value={firstName}
+            onChange={handleFirstNameInput}
+            required
+          />
+        </div>
 
-      <label htmlFor="email">Email:</label>
-      <input
-        type="email"
-        id="email"
-        value={email}
-        onChange={handleEmailInput}
-        required
-      />
+        <div className="form-row">
+          <label htmlFor="lastName" className="form-label">
+            Last Name:
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            className="form-input"
+            value={lastName}
+            onChange={handleLastNameInput}
+            required
+          />
+        </div>
 
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={handlePasswordInput}
-        required
-      />
+        <div className="form-row">
+          <label htmlFor="email" className="form-label">
+            Email:
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="form-input"
+            value={email}
+            onChange={handleEmailInput}
+            required
+          />
+        </div>
 
-      <label htmlFor="passwordAgain">Password Again:</label>
-      <input
-        type="password"
-        id="passwordAgain"
-        value={password2}
-        onChange={handlePassword2Input}
-        required
-      />
-      <button>Register</button>
-    </form>
+        <div className="form-row">
+          <label htmlFor="password" className="form-label">
+            Password:
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="form-input"
+            value={password}
+            onChange={handlePasswordInput}
+            required
+          />
+        </div>
+
+        <div className="form-row">
+          <label htmlFor="passwordAgain" className="form-label">
+            Password Again:
+          </label>
+          <input
+            type="password"
+            id="passwordAgain"
+            className="form-input"
+            value={password2}
+            onChange={handlePassword2Input}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-block">
+          submit
+        </button>
+      </form>
+    </section>
   );
 
   return <>{isLoading ? <h1>Loading...</h1> : registrationForm}</>;
