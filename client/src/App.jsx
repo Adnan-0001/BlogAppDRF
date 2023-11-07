@@ -13,6 +13,7 @@ import { setCredentials } from "./features/auth/authSlice";
 import Register from "./features/auth/Register";
 import PostList from "./features/posts/PostList";
 import { PostCreateForm } from "./features/posts/PostCreateForm";
+import PostDetail from "./features/posts/PostDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,7 +64,8 @@ function App() {
           />
 
           <Route path="posts" element={<PostList />} />
-          {/* <Route path="posts/:id" element={<PostDetails />} /> */}
+          <Route path="posts/:postId" element={<PostDetail />} />
+          {/* <Route path="posts/edit/:postId" element={<PostDetail />} /> */}
 
           {/* <Route element={<ProtectedRoute />}>
             <Route path="dashboard" element={<Dashboard />} />

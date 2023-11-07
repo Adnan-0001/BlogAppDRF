@@ -254,7 +254,8 @@ ul {
 p.post-content {
   margin-top: 10px;
 }
-.posts-list {
+.posts-list,
+.post {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
