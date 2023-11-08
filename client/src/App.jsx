@@ -14,6 +14,7 @@ import Register from "./features/auth/Register";
 import PostList from "./features/posts/PostList";
 import { PostCreateForm } from "./features/posts/PostCreateForm";
 import PostDetail from "./features/posts/PostDetail";
+import { PostEditForm } from "./features/posts/PostEditForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,9 +64,11 @@ function App() {
             }
           />
 
-          <Route path="posts" element={<PostList />} />
-          <Route path="posts/:postId" element={<PostDetail />} />
-          {/* <Route path="posts/edit/:postId" element={<PostDetail />} /> */}
+          <Route path="posts">
+            <Route index element={<PostList />} />
+            <Route path=":postId" element={<PostDetail />} />
+            <Route path="edit/:postId" element={<PostEditForm />} />
+          </Route>
 
           {/* <Route element={<ProtectedRoute />}>
             <Route path="dashboard" element={<Dashboard />} />

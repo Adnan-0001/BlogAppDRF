@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const PostExcerpt = ({ post }) => {
-  console.log("post is: ", post);
   return (
     <article className="post-excerpt" key={post.id}>
       <h3>{post.title}</h3>

@@ -25,7 +25,5 @@ const PostDetail = () => {
   }
 
   return <section>{content}</section>;
-
-  return <div>PostDetail</div>;
 };
 export default PostDetail;

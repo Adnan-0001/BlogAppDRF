@@ -9,7 +9,6 @@ const PostList = () => {
     isError,
     error,
   } = useAllPostsQuery();
-  console.log("req..");
 
   let content;
   if (isLoading) {
