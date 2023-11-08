@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useCreatePostMutation } from "./postApiSlice";
 import { selectCurrentUserId } from "../auth/authSlice";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const PostCreateForm = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -23,8 +25,7 @@ export const PostCreateForm = () => {
         author: currUserId,
       }).unwrap();
 
-      setContent("");
-      setTitle("");
+      navigate("/posts");
     } catch (error) {
       console.log("Error in adding new post: ", error);
     }
