@@ -15,6 +15,7 @@ import PostList from "./features/posts/PostList";
 import { PostCreateForm } from "./features/posts/PostCreateForm";
 import PostDetail from "./features/posts/PostDetail";
 import { PostEditForm } from "./features/posts/PostEditForm";
+import ProtectedOwnersOnlyRoute from "./components/ProtectedOwnersOnlyRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -67,7 +68,16 @@ function App() {
           <Route path="posts">
             <Route index element={<PostList />} />
             <Route path=":postId" element={<PostDetail />} />
-            <Route path="edit/:postId" element={<PostEditForm />} />
+            <Route
+              path="edit/:postId"
+              element={
+                <ProtectedRoute>
+                  <ProtectedOwnersOnlyRoute>
+                    <PostEditForm />
+                  </ProtectedOwnersOnlyRoute>
+                </ProtectedRoute>
+              }
+            />
           </Route>
 
           {/* <Route element={<ProtectedRoute />}>
