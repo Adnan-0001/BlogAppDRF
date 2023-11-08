@@ -14,17 +14,16 @@ const PostList = () => {
   if (isLoading) {
     content = "Loading...";
   } else if (isSuccess) {
-    content = posts.map((post) => <PostExcerpt key={post.id} post={post} />);
+    content = posts.length ? (
+      posts.map((post) => <PostExcerpt key={post.id} post={post} />)
+    ) : (
+      <h3>No Posts to see</h3>
+    );
   } else if (isError) {
     content = <div>{error.toString()}</div>;
   }
 
-  return (
-    <section className="posts-list">
-      <h2>Posts</h2>
-      {content}
-    </section>
-  );
+  return <section className="posts-list">{content}</section>;
 };
 
 export default PostList;
