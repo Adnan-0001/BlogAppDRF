@@ -3,6 +3,7 @@ import { useSinglePostQuery, useDeletePostMutation } from "./postApiSlice";
 import { Link } from "react-router-dom";
 import { selectCurrentUserId } from "../auth/authSlice";
 import { useSelector } from "react-redux";
+import { PostAuthor } from "./PostAuthor";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -35,6 +36,10 @@ const PostDetail = () => {
     content = (
       <article className="post">
         <h2>{post.title}</h2>
+
+        <div className="post-info">
+          <PostAuthor userId={post.author} />
+        </div>
 
         <p className="post-content">{post.content}</p>
 
