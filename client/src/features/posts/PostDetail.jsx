@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSinglePostQuery } from "./postApiSlice";
 import { Link } from "react-router-dom";
 import { selectCurrentUserId } from "../auth/authSlice";
@@ -6,9 +6,15 @@ import { useSelector } from "react-redux";
 
 const PostDetail = () => {
   const { postId } = useParams();
+  const navigate = useNavigate();
   const currUserId = useSelector(selectCurrentUserId);
 
-  const { data: post, isFetching, isSuccess } = useSinglePostQuery(postId);
+  const {
+    data: post,
+    isFetching,
+    isSuccess,
+    isError,
+  } = useSinglePostQuery(postId);
 
   let content;
   if (isFetching) {
@@ -27,6 +33,8 @@ const PostDetail = () => {
         )}
       </article>
     );
+  } else if (isError) {
+    navigate("/posts");
   }
 
   return <section>{content}</section>;

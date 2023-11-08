@@ -8,7 +8,12 @@ import { Link } from "react-router-dom";
 
 export const PostEditForm = () => {
   const { postId } = useParams();
-  const { data: post, isFetching, isSuccess } = useSinglePostQuery(postId);
+  const {
+    data: post,
+    isFetching,
+    isSuccess,
+    isError,
+  } = useSinglePostQuery(postId);
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
@@ -47,7 +52,7 @@ export const PostEditForm = () => {
   let pageContent;
   if (isLoading || isFetching) {
     pageContent = <h1>Loading ...</h1>;
-  } else {
+  } else if (isSuccess) {
     pageContent = (
       <section className="post-update-form">
         <form className="form" onSubmit={handleSubmit}>
@@ -88,6 +93,8 @@ export const PostEditForm = () => {
         </form>
       </section>
     );
+  } else if (isError) {
+    navigate("/posts");
   }
 
   return <>{pageContent}</>;
