@@ -17,7 +17,7 @@ const ProtectedOwnersOnlyRoute = ({ children }) => {
     return <h1>Loading ...</h1>;
   }
 
-  if ((isSuccess && userId !== post.id) || isError) {
+  if ((isSuccess && userId !== post.author) || isError) {
     return <Navigate to="/posts" replace={true} />;
   }
   return children;
