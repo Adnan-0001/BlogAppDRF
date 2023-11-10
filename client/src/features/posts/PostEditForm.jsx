@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSinglePostQuery } from "./postApiSlice";
 import { Link } from "react-router-dom";
+import TextEditor from "../../components/TextEditor";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -58,7 +59,7 @@ export const PostEditForm = () => {
   } else if (isSuccess) {
     pageContent = (
       <section className="post-update-form">
-        <form className="form-post" onSubmit={handleSubmit}>
+        <form className="form form-post" onSubmit={handleSubmit}>
           <h4>Update Post</h4>
 
           <div className="form-row">
@@ -90,15 +91,7 @@ export const PostEditForm = () => {
               required
             />
           </div> */}
-
-          <div className="editor-container">
-            <ReactQuill
-              theme="snow"
-              placeholder="Insert your content here..."
-              value={content}
-              onChange={setContent}
-            ></ReactQuill>
-          </div>
+          <TextEditor content={content} setContent={setContent} />
 
           <div className="submit-btn-container">
             <button type="submit" className="btn btn-block">

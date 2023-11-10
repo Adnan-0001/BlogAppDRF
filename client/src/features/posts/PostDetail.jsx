@@ -33,6 +33,8 @@ const PostDetail = () => {
   if (isFetching) {
     content = <h1>Loading...</h1>;
   } else if (isSuccess) {
+    const postContent = post.content;
+
     content = (
       <article className="post">
         <h2>{post.title}</h2>
@@ -41,7 +43,10 @@ const PostDetail = () => {
           <PostAuthor userId={post.author} />
         </div>
 
-        <p className="post-content">{post.content}</p>
+        <p
+          className="post-content"
+          dangerouslySetInnerHTML={{ __html: postContent }}
+        ></p>
 
         {post.author === currUserId && (
           <>

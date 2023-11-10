@@ -4,8 +4,7 @@ import { selectCurrentUserId } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import TextEditor from "../../components/TextEditor";
 
 export const PostCreateForm = () => {
   const navigate = useNavigate();
@@ -20,6 +19,7 @@ export const PostCreateForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(title, "  content is: ", content);
 
     try {
       const result = await createPost({
@@ -38,7 +38,6 @@ export const PostCreateForm = () => {
     <section className="post-create-form">
       <form className="form form-post" onSubmit={handleSubmit}>
         <h4>Create Post</h4>
-
         <div className="form-row">
           <label htmlFor="title" className="form-label">
             Title:
@@ -53,7 +52,6 @@ export const PostCreateForm = () => {
             maxLength={60}
           />
         </div>
-
         {/* <div className="form-row">
           <label htmlFor="content" className="form-label">
             Content:
@@ -68,14 +66,8 @@ export const PostCreateForm = () => {
             required
           />
         </div> */}
-        <div className="editor-container">
-          <ReactQuill
-            theme="snow"
-            placeholder="Insert your content here..."
-            value={content}
-            onChange={setContent}
-          ></ReactQuill>
-        </div>
+
+        <TextEditor content={content} setContent={setContent} />
 
         <div className="submit-btn-container">
           <button type="submit" className="btn btn-block">

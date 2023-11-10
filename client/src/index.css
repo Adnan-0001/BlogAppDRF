@@ -239,6 +239,7 @@ ul {
   padding: 0.8rem;
   border: 1px solid rgb(177, 174, 174);
   border-radius: 7px;
+  overflow: auto;
 }
 
 .posts-list .post-excerpt + .post-excerpt {
@@ -260,10 +261,12 @@ ul {
 
 p.post-content {
   margin-top: 10px;
+  word-break: break-word;
+  overflow: hidden;
 }
 .posts-list,
 .post {
-  max-width: 800px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 1.5rem;
