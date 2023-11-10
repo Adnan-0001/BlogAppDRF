@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { PostAuthor } from "./PostAuthor";
+import DOMPurify from "dompurify";
 
 const PostExcerpt = ({ post }) => {
-  const postContent = post.content.substring(0, 100);
+  const postContent = DOMPurify.sanitize(post.content.substring(0, 100));
+
   return (
     <article className="post-excerpt" key={post.id}>
       <h3>{post.title}</h3>

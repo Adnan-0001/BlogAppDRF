@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { selectCurrentUserId } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { PostAuthor } from "./PostAuthor";
+import DOMPurify from "dompurify";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -33,7 +34,7 @@ const PostDetail = () => {
   if (isFetching) {
     content = <h1>Loading...</h1>;
   } else if (isSuccess) {
-    const postContent = post.content;
+    const postContent = DOMPurify.sanitize(post.content);
 
     content = (
       <article className="post">
