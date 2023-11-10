@@ -15,13 +15,16 @@ urlpatterns = [
         views.UserRegistrationAPIView.as_view(),
         name="create-user",
     ),
-    path("login/", views.UserLoginAPIView.as_view(), name="login-user"),
-    path("logout/", views.UserLogoutAPIView.as_view(), name="logout-user"),
+    path("login/", views.UserLoginAPIView.as_view(), name="login_user"),
+    path("logout/", views.UserLogoutAPIView.as_view(), name="logout_user"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path(
         "check-token-validity/",
         views.CheckTokenValidityView.as_view(),
         name="check_token_validity",
+    ),
+    path(
+        "upload-image/", views.ImageUploadView.as_view(), name="image_upload"
     ),
     path("api-auth/", include("rest_framework.urls")),
     path("", include(router.urls)),
