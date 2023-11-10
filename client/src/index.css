@@ -153,6 +153,7 @@ ul {
 }
 .btn-block {
   width: 100%;
+  max-width: 600px;
 }
 
 /* alerts */
@@ -176,6 +177,8 @@ ul {
 .form {
   width: 90vw;
   max-width: var(--fixed-width);
+  /* max-width: 90%; */
+
   background: var(--white);
   border-radius: var(--borderRadius);
   box-shadow: var(--shadow-2);
@@ -264,4 +267,24 @@ p.post-content {
   margin-left: auto;
   margin-right: auto;
   padding: 0 1.5rem;
+}
+
+.form-post {
+  width: 90vw;
+  max-width: 90%;
+}
+
+.editor-container {
+  height: 500px;
+  margin-bottom: 0.25rem;
+}
+
+.quill {
+  height: 90%;
+}
+
+.submit-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

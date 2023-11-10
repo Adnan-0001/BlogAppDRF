@@ -4,6 +4,9 @@ import { selectCurrentUserId } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 export const PostCreateForm = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
@@ -33,7 +36,7 @@ export const PostCreateForm = () => {
 
   const postCreateForm = (
     <section className="post-create-form">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form form-post" onSubmit={handleSubmit}>
         <h4>Create Post</h4>
 
         <div className="form-row">
@@ -47,10 +50,11 @@ export const PostCreateForm = () => {
             value={title}
             onChange={handleTitleInput}
             required
+            maxLength={60}
           />
         </div>
 
-        <div className="form-row">
+        {/* <div className="form-row">
           <label htmlFor="content" className="form-label">
             Content:
           </label>
@@ -63,11 +67,21 @@ export const PostCreateForm = () => {
             onChange={handleContentInput}
             required
           />
+        </div> */}
+        <div className="editor-container">
+          <ReactQuill
+            theme="snow"
+            placeholder="Insert your content here..."
+            value={content}
+            onChange={setContent}
+          ></ReactQuill>
         </div>
 
-        <button type="submit" className="btn btn-block">
-          Save
-        </button>
+        <div className="submit-btn-container">
+          <button type="submit" className="btn btn-block">
+            Save
+          </button>
+        </div>
       </form>
     </section>
   );
