@@ -3,7 +3,12 @@ from blog_api.serializers import (
     UserRegistrationSerializer,
     UserSerializer,
 )
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from rest_framework import status, viewsets
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -22,13 +27,38 @@ class UserRegistrationAPIView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        token = RefreshToken.for_user(user)
-        data = serializer.data
-        data["tokens"] = {
-            "refresh": str(token),
-            "access": str(token.access_token),
-        }
-        return Response(data, status=status.HTTP_201_CREATED)
+
+        return self.confirm_email(request, user)
+
+    def confirm_email(self, request, user):
+        confirmation_token = default_token_generator.make_token(user)
+
+        mail_subject = "Activate your user account."
+        message = render_to_string(
+            "activate_account.html",
+            {
+                "user_name": user.first_name,
+                "user_id": user.id,
+                "domain": get_current_site(request).domain,
+                "token": confirmation_token,
+                "protocol": "https" if request.is_secure() else "http",
+            },
+        )
+        email = EmailMessage(
+            mail_subject, message, settings.EMAIL_HOST_USER, to=[user.email]
+        )
+        email.fail_silently = False
+
+        if email.send():
+            return Response(
+                "Please check your email for activation link.",
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(
+                "Could not send email activation link.",
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 class UserLoginAPIView(GenericAPIView):

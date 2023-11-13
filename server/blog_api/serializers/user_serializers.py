@@ -24,6 +24,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {"password": {"write_only": True}}
 
+    # this is needed so the a new object is always created using custom manager
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
+
 
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.CharField()
@@ -34,3 +38,6 @@ class UserLoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)

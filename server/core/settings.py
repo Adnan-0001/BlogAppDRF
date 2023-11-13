@@ -1,9 +1,17 @@
+import os
 from datetime import timedelta
 from pathlib import Path
-import os
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialise environment variable
+env = environ.Env()
+
+# loading environment variables
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 
 SECRET_KEY = (
@@ -174,3 +182,15 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+# Specifies how long the django default token is valid for in secs
+PASSWORD_RESET_TIMEOUT = 600
+
+
+# ************************** Email settings **************************
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True

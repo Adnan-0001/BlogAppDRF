@@ -26,6 +26,11 @@ urlpatterns = [
     path(
         "upload-image/", views.ImageUploadView.as_view(), name="image_upload"
     ),
+    path(
+        "confirm-email/<int:user_id>/<str:token>/",
+        views.EmailConfirmationView.as_view(),
+        name="confirm_email",
+    ),
     path("api-auth/", include("rest_framework.urls")),
     path("", include(router.urls)),
 ]
