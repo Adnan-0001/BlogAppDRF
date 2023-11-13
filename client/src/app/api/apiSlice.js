@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  setCredentials,
   clearCredentials,
+  setCredentials,
 } from "../../features/auth/authSlice";
 import { getRefreshToken } from "../../utils";
 
+export const DOMAIN = "http://127.0.0.1:8000";
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://127.0.0.1:8000/api/",
+  baseUrl: DOMAIN + "/api/",
 
   // injecting auth headers to all outgoing requests
   prepareHeaders: (headers, { getState }) => {
