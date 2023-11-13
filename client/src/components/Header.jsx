@@ -1,15 +1,22 @@
-import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCurrentUserId,
-  selectCurrentRefreshToken,
-} from "../features/auth/authSlice";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../features/auth/authApiSlice";
-import { clearCredentials } from "../features/auth/authSlice";
+import {
+  clearCredentials,
+  selectCurrentRefreshToken,
+  selectCurrentUserId,
+} from "../features/auth/authSlice";
+import { useSingleUserQuery } from "../features/users/userApiSlice";
 
 export const Header = () => {
   const currUserId = useSelector(selectCurrentUserId);
   const curRefreshToken = useSelector(selectCurrentRefreshToken);
+
+  const {
+    data: author,
+    isFetching,
+    isSuccess,
+  } = useSingleUserQuery(currUserId);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,6 +32,10 @@ export const Header = () => {
     }
   };
 
+  if (isFetching) {
+    return <h1>Loading</h1>;
+  }
+
   const content = (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -39,7 +50,7 @@ export const Header = () => {
 
         {currUserId && (
           <>
-            <span className="navbar-text">Welcome, {currUserId}</span>
+            <span className="navbar-text">Welcome, {author.first_name}</span>
 
             <NavLink
               to="/"

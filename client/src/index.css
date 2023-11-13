@@ -262,7 +262,9 @@ ul {
 p.post-content {
   margin-top: 10px;
   word-break: break-word;
-  overflow: hidden;
+}
+p.post-content img {
+  max-width: 100%;
 }
 .posts-list,
 .post {
