@@ -59,7 +59,7 @@ export const Header = () => {
             DRF Blogs
           </NavLink>
 
-          {currUserId && isSuccess && (
+          {id && isSuccess && (
             <>
               <span className="navbar-text">Welcome, {author.first_name}</span>
 
@@ -86,7 +86,7 @@ export const Header = () => {
             All Posts
           </NavLink>
 
-          {currUserId && (
+          {id && (
             <>
               <NavLink
                 to="/posts/add"
@@ -115,7 +115,7 @@ export const Header = () => {
 
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
-              {currUserId && (
+              {id && (
                 <li className="nav-item">
                   <button
                     className="btn btn-outline-primary my-2 my-lg-0 ml-2"
@@ -126,7 +126,7 @@ export const Header = () => {
                 </li>
               )}
 
-              {!currUserId && (
+              {!id && (
                 <>
                   <li className="nav-item">
                     <NavLink
