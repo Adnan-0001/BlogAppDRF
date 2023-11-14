@@ -30,7 +30,7 @@ function App() {
 
       if (tokens) {
         dispatch(setCredentials({ ...tokens }));
-        await checkTokenValidity();
+        // await checkTokenValidity();
       }
     };
     updateTokensState();
