@@ -3,5 +3,6 @@ Hi {{ user_name }},
 
 Please click on the link below to confirm your registration:
 
-http://{{ domain }}{% url 'confirm_email' user_id=user_id token=token %}
+{{activation_link}}
+
 {% endautoescape %}

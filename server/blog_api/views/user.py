@@ -6,7 +6,6 @@ from blog_api.serializers import (
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from rest_framework import status, viewsets
@@ -32,15 +31,18 @@ class UserRegistrationAPIView(GenericAPIView):
 
     def confirm_email(self, request, user):
         confirmation_token = default_token_generator.make_token(user)
+        client_domain = request.data.get("client_domain")
+
+        activation_link = (
+            f"{client_domain}/confirm-email/{user.id}/{confirmation_token}/"
+        )
 
         mail_subject = "Activate your user account."
         message = render_to_string(
             "activate_account.html",
             {
                 "user_name": user.first_name,
-                "user_id": user.id,
-                "domain": get_current_site(request).domain,
-                "token": confirmation_token,
+                "activation_link": activation_link,
                 "protocol": "https" if request.is_secure() else "http",
             },
         )

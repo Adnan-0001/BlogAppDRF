@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 class EmailConfirmationView(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request, user_id, token, *args, **kwargs):
+    def post(self, request, user_id, token, *args, **kwargs):
         try:
             user = User.objects.get(pk=user_id)
         except Exception:

@@ -14,6 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    client_domain = serializers.CharField()
+
     class Meta:
         model = User
         fields = (
@@ -21,11 +23,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             "password",
             "first_name",
             "last_name",
+            "client_domain",
         )
         extra_kwargs = {"password": {"write_only": True}}
 
     # this is needed so the a new object is always created using custom manager
     def create(self, validated_data):
+        validated_data.pop("client_domain")
         return User.objects.create_user(**validated_data)
 
 
