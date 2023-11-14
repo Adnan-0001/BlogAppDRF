@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useCreatePostMutation } from "./postApiSlice";
-import { selectCurrentUserId } from "../auth/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import TextEditor from "../../components/TextEditor";
+import { showToast } from "../../utils";
+import { selectCurrentUserId } from "../auth/authSlice";
+import { useCreatePostMutation } from "./postApiSlice";
 
 export const PostCreateForm = () => {
   const navigate = useNavigate();
@@ -27,10 +27,14 @@ export const PostCreateForm = () => {
         content,
         author: currUserId,
       }).unwrap();
-
-      navigate("/posts");
+      showToast({ message: "Post created successfully!", type: "success" });
+      navigate(`/posts/${postId}`);
     } catch (error) {
       console.log("Error in adding new post: ", error);
+      showToast({
+        message: "There was an error in creating post!",
+        type: "error",
+      });
     }
   };
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useLoginMutation } from "./authApiSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { showToast } from "../../utils";
+import { useLoginMutation } from "./authApiSlice";
 import { setCredentials } from "./authSlice";
-import { selectCurrentUserId } from "./authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +27,10 @@ const Login = () => {
       setPassword("");
       navigate("/dashboard");
     } catch (err) {
-      console.log(err);
+      if (err.status === 400) {
+        showToast({ message: "Incorrect credentials!", type: "error" });
+      }
+      console.log("Error in login: ", err);
     }
   };
 

@@ -1,10 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useSinglePostQuery, useDeletePostMutation } from "./postApiSlice";
-import { Link } from "react-router-dom";
-import { selectCurrentUserId } from "../auth/authSlice";
-import { useSelector } from "react-redux";
-import { PostAuthor } from "./PostAuthor";
 import DOMPurify from "dompurify";
+import { useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { showToast } from "../../utils";
+import { selectCurrentUserId } from "../auth/authSlice";
+import { PostAuthor } from "./PostAuthor";
+import { useDeletePostMutation, useSinglePostQuery } from "./postApiSlice";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -23,9 +23,16 @@ const PostDetail = () => {
   const handlePostDeletion = async () => {
     try {
       const result = await deletePost(postId).unwrap();
-
+      showToast({
+        message: "Post deleted successfully!",
+        type: "success",
+      });
       navigate("/posts");
     } catch (error) {
+      showToast({
+        message: "There was an error in deleting post!",
+        type: "error",
+      });
       console.log("Error in deleting post: ", error);
     }
   };

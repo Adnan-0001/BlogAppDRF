@@ -1,21 +1,22 @@
-import Login from "./features/auth/Login";
-import Home from "./pages/Home";
-import Error404 from "./pages/Error404";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SharedLayout } from "./components/SharedLayout";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { SharedLayout } from "./components/SharedLayout";
+import Login from "./features/auth/Login";
+import Dashboard from "./pages/Dashboard";
+import Error404 from "./pages/Error404";
+import Home from "./pages/Home";
 
+import { ToastContainer } from "react-toastify";
+import ProtectedOwnersOnlyRoute from "./components/ProtectedOwnersOnlyRoute";
+import Register from "./features/auth/Register";
 import { useCheckTokenValidityMutation } from "./features/auth/authApiSlice";
 import { setCredentials } from "./features/auth/authSlice";
-import Register from "./features/auth/Register";
-import PostList from "./features/posts/PostList";
 import { PostCreateForm } from "./features/posts/PostCreateForm";
 import PostDetail from "./features/posts/PostDetail";
 import { PostEditForm } from "./features/posts/PostEditForm";
-import ProtectedOwnersOnlyRoute from "./components/ProtectedOwnersOnlyRoute";
+import PostList from "./features/posts/PostList";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />

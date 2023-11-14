@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { useUpdatePostMutation } from "./postApiSlice";
-import { selectCurrentUserId } from "../auth/authSlice";
+import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSinglePostQuery } from "./postApiSlice";
-import { Link } from "react-router-dom";
 import TextEditor from "../../components/TextEditor";
-
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { showToast } from "../../utils";
+import { selectCurrentUserId } from "../auth/authSlice";
+import { useSinglePostQuery, useUpdatePostMutation } from "./postApiSlice";
 
 export const PostEditForm = () => {
   const { postId } = useParams();
@@ -47,9 +44,17 @@ export const PostEditForm = () => {
         author: currUserId,
       }).unwrap();
 
-      navigate("/posts");
+      showToast({
+        message: "Post updated successfully!",
+        type: "success",
+      });
+      navigate(`/posts/${postId}`);
     } catch (error) {
       console.log("Error in updating post: ", error);
+      showToast({
+        message: "There was an error in updating post!",
+        type: "error",
+      });
     }
   };
 
