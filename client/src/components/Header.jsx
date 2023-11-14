@@ -133,8 +133,8 @@ export const Header = () => {
                       to="/login"
                       className={({ isActive }) =>
                         isActive
-                          ? "link active btn btn-outline-primary my-2 my-lg-0"
-                          : "link btn btn-outline-primary my-2 my-lg-0"
+                          ? "link active btn btn-outline-primary my-2 my-lg-0 mr-2"
+                          : "link btn btn-outline-primary my-2 my-lg-0 mr-2"
                       }
                     >
                       Login
@@ -145,8 +145,8 @@ export const Header = () => {
                       to="/register"
                       className={({ isActive }) =>
                         isActive
-                          ? "link active btn btn-outline-primary my-2 my-lg-0 ml-2"
-                          : "link btn btn-outline-primary my-2 my-lg-0 ml-2"
+                          ? "link active btn btn-outline-primary my-2 my-lg-0"
+                          : "link btn btn-outline-primary my-2 my-lg-0"
                       }
                     >
                       Register

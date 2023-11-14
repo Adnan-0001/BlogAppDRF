@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 
 import { ToastContainer } from "react-toastify";
 import ProtectedOwnersOnlyRoute from "./components/ProtectedOwnersOnlyRoute";
+import EmailVerification from "./features/auth/EmailVerification";
 import Register from "./features/auth/Register";
 import { useCheckTokenValidityMutation } from "./features/auth/authApiSlice";
 import { setCredentials } from "./features/auth/authSlice";
@@ -81,6 +82,11 @@ function App() {
               }
             />
           </Route>
+
+          <Route
+            path="confirm-email/:userId/:token"
+            element={<EmailVerification />}
+          />
 
           {/* <Route element={<ProtectedRoute />}>
             <Route path="dashboard" element={<Dashboard />} />

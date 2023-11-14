@@ -37,6 +37,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { refresh },
       }),
     }),
+    verifyEmail: builder.mutation({
+      query: ({ userId, token }) => ({
+        url: `confirm-email/${userId}/${token}/`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -47,4 +53,5 @@ export const {
   // useCheckTokenValidityQuery,
   useCheckTokenValidityMutation,
   useRegisterMutation,
+  useVerifyEmailMutation,
 } = authApiSlice;

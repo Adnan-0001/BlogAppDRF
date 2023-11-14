@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useRegisterMutation } from "./authApiSlice";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "./authSlice";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../../utils";
+import { useRegisterMutation } from "./authApiSlice";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -11,15 +10,13 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const handleEmailInput = (e) => setEmail(e.target.value);
   const handlePasswordInput = (e) => setPassword(e.target.value);
   const handlePassword2Input = (e) => setPassword2(e.target.value);
   const handleFirstNameInput = (e) => setFirstName(e.target.value);
   const handleLastNameInput = (e) => setLastName(e.target.value);
 
+  const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterMutation();
 
   const handleSubmit = async (e) => {
@@ -27,6 +24,10 @@ const Register = () => {
 
     try {
       if (password != password2) {
+        showToast({
+          message: "Password fields do not match!",
+          type: "error",
+        });
         throw new Error("Password fields do not match");
       }
       const result = await register({
@@ -34,16 +35,33 @@ const Register = () => {
         password,
         first_name: firstName,
         last_name: lastName,
+        client_domain: window.location.origin, // sending current site domain
       }).unwrap();
-      const { tokens } = result;
-      dispatch(setCredentials({ ...tokens }));
+
       setEmail("");
       setPassword("");
+      setPassword2("");
       setFirstName("");
       setLastName("");
-      navigate("/dashboard");
-    } catch (error) {
-      console.log("Registration error: ", error);
+
+      showToast({
+        message: "Verification email sent, check your inbox!",
+        type: "info",
+      });
+
+      navigate("/login");
+    } catch (err) {
+      console.log("Registration error: ", err);
+
+      const emailError = err?.data?.email;
+
+      if (err.status === 400 && emailError) {
+        if (emailError) {
+          showToast({ message: emailError[0], type: "error" });
+          return;
+        }
+      }
+      showToast({ message: "Something went wrong!", type: "error" });
     }
   };
 
