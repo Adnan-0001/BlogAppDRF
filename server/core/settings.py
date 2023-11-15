@@ -137,7 +137,9 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-    )
+    ),
+    # Custom exception handler
+    "EXCEPTION_HANDLER": "blog_api.api_exceptions.custom_exception_handler",
 }
 
 SIMPLE_JWT = {
@@ -194,3 +196,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
+
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.AllowAllUsersModelBackend"
+]
