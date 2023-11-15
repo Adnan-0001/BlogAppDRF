@@ -49,14 +49,14 @@ class UserRegistrationAPIView(GenericAPIView):
         email = EmailMessage(
             mail_subject, message, settings.EMAIL_HOST_USER, to=[user.email]
         )
-        email.fail_silently = False
 
-        if email.send():
+        try:
+            email.send(fail_silently=False)
             return Response(
                 "Please check your email for activation link.",
                 status=status.HTTP_201_CREATED,
             )
-        else:
+        except Exception:
             return Response(
                 "Could not send email activation link.",
                 status=status.HTTP_400_BAD_REQUEST,

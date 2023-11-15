@@ -1,3 +1,4 @@
+from blog_api.api_exceptions import GenericException
 from blog_api.models import Post, User
 from django.contrib.auth import authenticate
 from rest_framework import serializers
@@ -39,9 +40,14 @@ class UserLoginSerializer(serializers.Serializer):
 
     def validate(self, data):
         user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Incorrect Credentials")
+
+        if not user:
+            raise GenericException("Incorrect Credentials")
+
+        if not user.is_active:
+            raise GenericException("Account is not verified!")
+
+        return user
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
