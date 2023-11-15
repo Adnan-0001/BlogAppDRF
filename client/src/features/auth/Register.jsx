@@ -50,18 +50,9 @@ const Register = () => {
       });
 
       navigate("/login");
-    } catch (err) {
-      console.log("Registration error: ", err);
-
-      const emailError = err?.data?.email;
-
-      if (err.status === 400 && emailError) {
-        if (emailError) {
-          showToast({ message: emailError[0], type: "error" });
-          return;
-        }
-      }
-      showToast({ message: "Something went wrong!", type: "error" });
+    } catch (error) {
+      console.log("Registration error: ", error);
+      showToast({ message: error?.data, type: "error" });
     }
   };
 

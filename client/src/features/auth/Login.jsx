@@ -26,11 +26,9 @@ const Login = () => {
       setEmail("");
       setPassword("");
       navigate("/dashboard");
-    } catch (err) {
-      if (err.status === 400) {
-        showToast({ message: "Incorrect credentials!", type: "error" });
-      }
-      console.log("Error in login: ", err);
+    } catch (error) {
+      showToast({ message: error?.data, type: "error" });
+      console.log("Error in login: ", error);
     }
   };
 
