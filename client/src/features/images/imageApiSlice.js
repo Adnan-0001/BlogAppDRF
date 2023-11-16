@@ -14,7 +14,13 @@ export const imgApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    deleteImage: builder.mutation({
+      query: (img) => ({
+        url: `delete-image/${img}/`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useUploadImageMutation } = imgApiSlice;
+export const { useUploadImageMutation, useDeleteImageMutation } = imgApiSlice;

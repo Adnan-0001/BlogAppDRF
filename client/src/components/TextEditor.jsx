@@ -1,12 +1,61 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { DOMAIN } from "../app/api/apiSlice";
-import { useUploadImageMutation } from "../features/images/imageApiSlice";
+import {
+  useDeleteImageMutation,
+  useUploadImageMutation,
+} from "../features/images/imageApiSlice";
 
 const TextEditor = ({ content, setContent }) => {
   const [uploadImage] = useUploadImageMutation();
+  const [deleteImage] = useDeleteImageMutation();
   const quillRef = useRef(null);
+
+  useEffect(() => {
+    console.log("in useEffect");
+    if (quillRef) {
+      console.log("in useEffect also editor exists");
+
+      const quillEditorInstance = quillRef.current.editor;
+
+      quillEditorInstance.on("text-change", (delta, oldContents, source) => {
+        if (source !== "user") return;
+
+        const deletedImagesUrls = getImgUrls(
+          quillEditorInstance.getContents().diff(oldContents)
+        );
+
+        if (deletedImagesUrls.length) {
+          console.log("delete", deletedImagesUrls);
+          deletedImagesUrls.map(async (url) => {
+            try {
+              const img = url.split("/").pop();
+              console.log("toto", img);
+              const resp = await deleteImage(img).unwrap();
+              console.log("got: ", resp);
+            } catch (error) {
+              console.log("Error in deleting image:", error);
+            }
+          });
+        }
+      });
+
+      function getImgUrls(delta) {
+        return delta.ops
+          .filter((i) => i.insert && i.insert.image)
+          .map((i) => i.insert.image);
+      }
+
+      // remove the event listener when the component unmounts
+      return () => {
+        quillEditorInstance.on(
+          "text-change",
+          (delta, oldContents, source) => {}
+        );
+      };
+    }
+  }, [quillRef]);
 
   function quill_img_handler() {
     const input = document.createElement("input");
