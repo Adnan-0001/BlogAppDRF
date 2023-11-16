@@ -27,6 +27,11 @@ urlpatterns = [
         "upload-image/", views.ImageUploadView.as_view(), name="image_upload"
     ),
     path(
+        "delete-image/<str:img>/",
+        views.ImageDeleteView.as_view(),
+        name="image_delete",
+    ),
+    path(
         "confirm-email/<int:user_id>/<str:token>/",
         views.EmailConfirmationView.as_view(),
         name="confirm_email",
